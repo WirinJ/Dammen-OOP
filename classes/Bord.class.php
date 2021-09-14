@@ -48,12 +48,11 @@ class Bord
         $this->vakjes[$zetSteenRij][$zetSteenKolom]->steen->isDam = true;
     }
 
-    public function maakDam($zet)
+    public function maakDam($zet, $speler)
     {
         $naarRij = $zet->naarPositie->y;
         $naarKolom = $zet->naarPositie->x;
-        // $this->vakjes[$naarRij][$naarKolom]->steen = $zetSteen;
-        echo 'ISDAM';
+        $this->vakjes[$naarRij][$naarKolom]->steen = new Dam($speler->kleur);
     }
 
     public function printStatus()
