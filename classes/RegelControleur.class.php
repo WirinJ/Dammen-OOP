@@ -116,7 +116,7 @@ class RegelControleur
     public function wordtDam($zet, $speler)
     {
         if ($speler->kleur == 'wit') {
-            if ($zet->naarPositie->y == 9) {
+            if ($zet->naarPositie->y == 5) {
                 return true;
             }
         } else {
@@ -180,28 +180,27 @@ class RegelControleur
                 $mogelijkeSlagen[] = new Zet($steenPositie, $naar);
             }
 
-            // if ($this->isDam($steenPositie, $bord)) {
-            //     $naar = new Positie(($steenPositie->x + 2), ($steenPositie->y + ($damRichting * 2)));
-            //     $over = new Positie(($steenPositie->x + 1), ($steenPositie->y + $damRichting));
-            //     if (
-            //         $this->positieIsBinnenBord($naar)
-            //         && !$this->bevatSteen($naar, $bord)
-            //         && $this->bevatSteenVanTegenstander($over, $bord, $speler)
-            //     ) {
-            //         $mogelijkeSlagen[] = new Zet($steenPositie, $naar);
-            //     }
-            //     $naar = new Positie(($steenPositie->x - 2), ($steenPositie->y + ($damRichting * 2)));
-            //     $over = new Positie(($steenPositie->x - 1), ($steenPositie->y + $damRichting));
-            //     if (
-            //         $this->positieIsBinnenBord($naar)
-            //         && !$this->bevatSteen($naar, $bord)
-            //         && $this->bevatSteenVanTegenstander($over, $bord, $speler)
-            //     ) {
-            //         $mogelijkeSlagen[] = new Zet($steenPositie, $naar);
-            //     }
-            // }
-            print_r($mogelijkeSlagen);
-            return $mogelijkeSlagen;
+            if ($this->isDam($steenPositie, $bord)) {
+                $naar = new Positie(($steenPositie->x + 2), ($steenPositie->y + ($damRichting * 2)));
+                $over = new Positie(($steenPositie->x + 1), ($steenPositie->y + $damRichting));
+                if (
+                    $this->positieIsBinnenBord($naar)
+                    && !$this->bevatSteen($naar, $bord)
+                    && $this->bevatSteenVanTegenstander($over, $bord, $speler)
+                ) {
+                    $mogelijkeSlagen[] = new Zet($steenPositie, $naar);
+                }
+                $naar = new Positie(($steenPositie->x - 2), ($steenPositie->y + ($damRichting * 2)));
+                $over = new Positie(($steenPositie->x - 1), ($steenPositie->y + $damRichting));
+                if (
+                    $this->positieIsBinnenBord($naar)
+                    && !$this->bevatSteen($naar, $bord)
+                    && $this->bevatSteenVanTegenstander($over, $bord, $speler)
+                ) {
+                    $mogelijkeSlagen[] = new Zet($steenPositie, $naar);
+                }
+            }
         }
+        return $mogelijkeSlagen;
     }
 }
