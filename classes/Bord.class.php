@@ -45,7 +45,7 @@ class Bord
     {
         $zetSteenRij = $over->y;
         $zetSteenKolom = $over->x;
-        $this->vakjes[$zetSteenRij][$zetSteenKolom]->steen->isDam = true;
+        $this->vakjes[$zetSteenRij][$zetSteenKolom]->steen = null;
     }
 
     public function maakDam($zet, $speler)
@@ -87,5 +87,9 @@ class Bord
             print_r($this->kleuren->getColoredString($kolomNummer . " ", "white", "magenta"));
         }
         print_r(PHP_EOL);
+
+        // foreach ($this->vakjes as $vakje) {
+        //     print_r($vakje) . PHP_EOL;
+        // }
     }
 }

@@ -65,7 +65,15 @@ class RegelControleur
 
     private function bevatSteen($positie, $bord)
     {
-        if (($bord->vakjes[$positie->y][$positie->x]->steen instanceof Steen)) {
+        if (($bord->vakjes[$positie->y][$positie->x]->steen != NULL)) {
+            return true;
+        }
+        return false;
+    }
+
+    private function isDam($positie, $bord)
+    {
+        if (($bord->vakjes[$positie->y][$positie->x]->steen instanceof Dam)) {
             return true;
         }
         return false;
@@ -105,10 +113,10 @@ class RegelControleur
         return $beschikbareVakken;
     }
 
-    public function isDam($zet, $speler)
+    public function wordtDam($zet, $speler)
     {
         if ($speler->kleur == 'wit') {
-            if ($zet->naarPositie->y == 0) {
+            if ($zet->naarPositie->y == 9) {
                 return true;
             }
         } else {
@@ -123,7 +131,9 @@ class RegelControleur
     private function mogelijkeZetten($beschikbareVakken, $bord, $speler)
     {
         $mogelijkeZetten = [];
+        $damRichting = $speler->beweegRichting == -1 ? 1 : -1;
         foreach ($beschikbareVakken as $steenPositie) {
+
             $naar = new Positie(($steenPositie->x + 1), ($steenPositie->y + $speler->beweegRichting));
             if ($this->positieIsBinnenBord($naar) && !$this->bevatSteen($naar, $bord)) {
                 $mogelijkeZetten[] = new Zet($steenPositie, $naar);
@@ -132,6 +142,16 @@ class RegelControleur
             if ($this->positieIsBinnenBord($naar) && !$this->bevatSteen($naar, $bord)) {
                 $mogelijkeZetten[] = new Zet($steenPositie, $naar);
             }
+            if ($this->isDam($steenPositie, $bord)) {
+                $naar = new Positie(($steenPositie->x + 1), ($steenPositie->y + $damRichting));
+                if ($this->positieIsBinnenBord($naar) && !$this->bevatSteen($naar, $bord)) {
+                    $mogelijkeZetten[] = new Zet($steenPositie, $naar);
+                }
+                $naar = new Positie(($steenPositie->x - 1), ($steenPositie->y + $damRichting));
+                if ($this->positieIsBinnenBord($naar) && !$this->bevatSteen($naar, $bord)) {
+                    $mogelijkeZetten[] = new Zet($steenPositie, $naar);
+                }
+            }
         }
         return $mogelijkeZetten;
     }
@@ -139,6 +159,7 @@ class RegelControleur
     private function mogelijkeSlagen($beschikbareVakken, $bord, $speler)
     {
         $mogelijkeSlagen = [];
+        $damRichting = $speler->beweegRichting == -1 ? 1 : -1;
         foreach ($beschikbareVakken as $steenPositie) {
             $naar = new Positie(($steenPositie->x + 2), ($steenPositie->y + ($speler->beweegRichting * 2)));
             $over = new Positie(($steenPositie->x + 1), ($steenPositie->y + $speler->beweegRichting));
@@ -158,7 +179,29 @@ class RegelControleur
             ) {
                 $mogelijkeSlagen[] = new Zet($steenPositie, $naar);
             }
+
+            // if ($this->isDam($steenPositie, $bord)) {
+            //     $naar = new Positie(($steenPositie->x + 2), ($steenPositie->y + ($damRichting * 2)));
+            //     $over = new Positie(($steenPositie->x + 1), ($steenPositie->y + $damRichting));
+            //     if (
+            //         $this->positieIsBinnenBord($naar)
+            //         && !$this->bevatSteen($naar, $bord)
+            //         && $this->bevatSteenVanTegenstander($over, $bord, $speler)
+            //     ) {
+            //         $mogelijkeSlagen[] = new Zet($steenPositie, $naar);
+            //     }
+            //     $naar = new Positie(($steenPositie->x - 2), ($steenPositie->y + ($damRichting * 2)));
+            //     $over = new Positie(($steenPositie->x - 1), ($steenPositie->y + $damRichting));
+            //     if (
+            //         $this->positieIsBinnenBord($naar)
+            //         && !$this->bevatSteen($naar, $bord)
+            //         && $this->bevatSteenVanTegenstander($over, $bord, $speler)
+            //     ) {
+            //         $mogelijkeSlagen[] = new Zet($steenPositie, $naar);
+            //     }
+            // }
+            print_r($mogelijkeSlagen);
+            return $mogelijkeSlagen;
         }
-        return $mogelijkeSlagen;
     }
 }
