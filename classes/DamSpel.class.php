@@ -42,6 +42,9 @@ class DamSpel
             if ($over != null) {
                 $this->bord->eet($over);
             }
+            if ($this->regelControleur->isDam($zet, $this->spelerAanDeBeurt)) {
+                $this->bord->maakDam($zet);
+            }
             $this->spelerAanDeBeurt = $this->userInterface->kiesSpeler($this->players, $this->spelerAanDeBeurt);
         } while (!$winnaar);
     }

@@ -45,7 +45,15 @@ class Bord
     {
         $zetSteenRij = $over->y;
         $zetSteenKolom = $over->x;
-        $this->vakjes[$zetSteenRij][$zetSteenKolom]->steen = null;
+        $this->vakjes[$zetSteenRij][$zetSteenKolom]->steen->isDam = true;
+    }
+
+    public function maakDam($zet)
+    {
+        $naarRij = $zet->naarPositie->y;
+        $naarKolom = $zet->naarPositie->x;
+        // $this->vakjes[$naarRij][$naarKolom]->steen = $zetSteen;
+        echo 'ISDAM';
     }
 
     public function printStatus()

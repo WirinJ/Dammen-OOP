@@ -105,6 +105,20 @@ class RegelControleur
         return $beschikbareVakken;
     }
 
+    public function isDam($zet, $speler)
+    {
+        if ($speler->kleur == 'wit') {
+            if ($zet->naarPositie->y == 0) {
+                return true;
+            }
+        } else {
+            if ($zet->naarPositie->y == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private function mogelijkeZetten($beschikbareVakken, $bord, $speler)
     {
