@@ -179,7 +179,7 @@ class RegelControleur
             ) {
                 $mogelijkeSlagen[] = new Zet($steenPositie, $naar);
             }
-
+            
             if ($this->isDam($steenPositie, $bord)) {
                 $naar = new Positie(($steenPositie->x + 2), ($steenPositie->y + ($damRichting * 2)));
                 $over = new Positie(($steenPositie->x + 1), ($steenPositie->y + $damRichting));
