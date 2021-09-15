@@ -11,5 +11,4 @@ spl_autoload_register(
 
 
 $spel = new DamSpel();
-
 $spel->start();

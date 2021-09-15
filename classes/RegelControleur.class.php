@@ -2,13 +2,23 @@
 
 namespace Dammen;
 
+print_r(glob("/classes/regels/*.php"));
+//foreach (glob("regels/*.php") as $filename) {
+//    include $filename;
+//}
+
 class RegelControleur
 {
-
+    //public $regels = [IsGeldigeSpeler];
     public $over;
 
     public function isGeldigeZet($zet, $bord, $spelerAanDeBeurt)
     {
+        // foreach ($this->regels as $regel) {
+        //     echo new $regel($spelerAanDeBeurt);
+        //     exit();
+        // }
+
         if (!$this->isGeldigeSpeler($spelerAanDeBeurt)) {
             return false;
         }
